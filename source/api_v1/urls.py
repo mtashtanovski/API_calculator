@@ -8,6 +8,7 @@ from api_v1.views import (
     multiply,
     divide,
 )
+app_name = 'api_v1'
 
 urlpatterns = [
     path('echo/', echo_view),
