@@ -2,16 +2,16 @@
 
 {% block content %}
     <div class="container">
-        <h1>Привет Мир!</h1>
+        <h2>Простой Калькулятор</h2>
         <form>
             {% csrf_token %}
             <div class="form-group">
               <label for="firstNumInput">Введите первое число:</label>
-              <input type="number" id="firstNumInput" class="form-control" placeholder="целое число">
+              <input type="number" id="firstNumInput" class="form-control" placeholder="целое число" required>
             </div>
             <div class="form-group">
               <label for="secondNumInput">Введите второе число:</label>
-              <input type="number" id="secondNumInput" class="form-control" placeholder="целое число">
+              <input type="number" id="secondNumInput" class="form-control" placeholder="целое число" required>
             </div>
 
             <button id="add" type="submit" class="btn btn-outline-primary">Сумма</button>
@@ -20,39 +20,38 @@
             <button id="divide" type="submit" class="btn btn-outline-primary">Деление</button>
         </form>
         <br>
-        <div class="card">
+        <div class="card" style="width: 200px">
             <div class="card-body">
                 <h5 class="card-title">Результат:</h5>
-                <p id="card-text" class="card-text"></p>
+                <h3 id="card-text" class="card-text"></h3>
             </div>
         </div>
     </div>
 
     <script type="text/javascript">
+
         $(document).on("click", "#add", function (e) {
             e.preventDefault();
             $.ajax({
                 type: "POST",
                 url: "{% url "api_v1:add" %}",
-                data: {
+                headers: {"X-CSRFToken": "{{ csrf_token }}"},
+                data: JSON.stringify({
                     A: $("#firstNumInput").val(),
                     B: $("#secondNumInput").val(),
-                    csrfmiddlewaretoken: '{{ csrf_token }}',
-                    action: 'post'
-                },
+                }),
                 contentType: 'application/json',
-                {#xhrFields: {#}
-                {#    withCredentials: true#}
-
 
                 success: function (json) {
-                    document.getElementById("card-text").innerHTML = json
-                    console.log(json)
+                    document.getElementById("card-text").innerHTML = json.answer;
+                    document.getElementById("card-text").style.color = "green";
                 },
-                error: function (xhr, errmsg, err) {
 
+                error: function (json) {
+                    document.getElementById("card-text").innerHTML = json.responseJSON.error_msg;
+                    document.getElementById("card-text").style.color = "red";
                 }
             });
-        })
+        });
     </script>
 {% endblock content %}

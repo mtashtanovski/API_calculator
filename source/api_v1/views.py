@@ -26,60 +26,92 @@ def echo_view(request):
 
 
 def add(request):
-    body = {}
-    response_data = json.loads(request.body)
-    if type(response_data['A']) == int and type(response_data['B'] == int):
-        summa = response_data['A'] + response_data['B']
-        body['answer'] = summa
-        response = JsonResponse(body)
-        return response
-    else:
-        body['error'] = 'Must be integers!'
-        response = JsonResponse(body, status=HTTPStatus.BAD_REQUEST)
-        return response
+    response_body = {}
+    if request.body:
+        response_data = json.loads(request.body)
+        if not response_data['A']:
+            response_body['error_msg'] = 'Ведите первое число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            print(response)
+            return response
+        elif not response_data['B']:
+            response_body['error_msg'] = 'Ведите второе число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            return response
+        else:
+            num1 = float(response_data['A'])
+            num2 = float(response_data['B'])
+            summa = num1 + num2
+            response_body['answer'] = summa
+            response = JsonResponse(response_body)
+            return response
 
 
 def subtract(request):
-    body = {}
-    response_data = json.loads(request.body)
-    if type(response_data['A']) == int and type(response_data['B'] == int):
-        summa = response_data['A'] - response_data['B']
-        body['answer'] = summa
-        response = JsonResponse(body)
-        return response
-    else:
-        body['error'] = 'Must be integers!'
-        response = JsonResponse(body, status=HTTPStatus.BAD_REQUEST)
-        return response
+    response_body = {}
+    if request.body:
+        response_data = json.loads(request.body)
+        if not response_data['A']:
+            response_body['error_msg'] = 'Ведите первое число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            print(response)
+            return response
+        elif not response_data['B']:
+            response_body['error_msg'] = 'Ведите второе число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            return response
+        else:
+            num1 = float(response_data['A'])
+            num2 = float(response_data['B'])
+            subtraction = num1 - num2
+            response_body['answer'] = subtraction
+            response = JsonResponse(response_body)
+            return response
 
 
 def multiply(request):
-    body = {}
-    response_data = json.loads(request.body)
-    if type(response_data['A']) == int and type(response_data['B'] == int):
-        summa = response_data['A'] * response_data['B']
-        body['answer'] = summa
-        response = JsonResponse(body)
-        return response
-    else:
-        body['error'] = 'Must be integers!'
-        response = JsonResponse(body, status=HTTPStatus.BAD_REQUEST)
-        return response
+    response_body = {}
+    if request.body:
+        response_data = json.loads(request.body)
+        if not response_data['A']:
+            response_body['error_msg'] = 'Ведите первое число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            print(response)
+            return response
+        elif not response_data['B']:
+            response_body['error_msg'] = 'Ведите второе число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            return response
+        else:
+            num1 = float(response_data['A'])
+            num2 = float(response_data['B'])
+            product = num1 * num2
+            response_body['answer'] = product
+            response = JsonResponse(response_body)
+            return response
 
 
 def divide(request):
-    body = {}
-    response_data = json.loads(request.body)
-    if type(response_data['A']) == int and type(response_data['B'] == int):
-        if response_data['B'] != 0:
-            summa = response_data['A'] / response_data['B']
-            body['answer'] = summa
-            response = JsonResponse(body)
+    response_body = {}
+    if request.body:
+        response_data = json.loads(request.body)
+        if not response_data['A']:
+            response_body['error_msg'] = 'Ведите первое число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+            print(response)
+            return response
+        elif not response_data['B']:
+            response_body['error_msg'] = 'Ведите второе число!'
+            response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             return response
         else:
-            body['error'] = 'Division by zero!'
-            response = JsonResponse(body, status=HTTPStatus.BAD_REQUEST)
+            num1 = float(response_data['A'])
+            num2 = float(response_data['B'])
+            if num2 == 0:
+                response_body['error_msg'] = 'Делить на НОЛЬ нельзя!'
+                response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
+                return response
+            division = num1 / num2
+            response_body['answer'] = division
+            response = JsonResponse(response_body)
             return response
-    body['error'] = 'Must be integers!'
-    response = JsonResponse(body, status=HTTPStatus.BAD_REQUEST)
-    return response
