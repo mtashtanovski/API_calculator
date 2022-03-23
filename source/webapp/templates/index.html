@@ -14,44 +14,71 @@
               <input type="number" id="secondNumInput" class="form-control" placeholder="целое число" required>
             </div>
 
-            <button id="add" type="submit" class="btn btn-outline-primary">Сумма</button>
-            <button id="subtract" type="submit" class="btn btn-outline-primary">Разность</button>
-            <button id="multiply" type="submit" class="btn btn-outline-primary">Произведение</button>
-            <button id="divide" type="submit" class="btn btn-outline-primary">Деление</button>
+            <button id="add" type="button" onclick="submitData('{% url "api_v1:add" %}')" class="btn btn-outline-primary">Сумма</button>
+            <button id="subtract" type="button" onclick="submitData('{% url "api_v1:subtract" %}')" class="btn btn-outline-primary">Разность</button>
+            <button id="multiply" type="button" onclick="submitData('{% url "api_v1:multiply" %}')" class="btn btn-outline-primary">Произведение</button>
+            <button id="divide" type="button" onclick="submitData('{% url "api_v1:divide" %}')" class="btn btn-outline-primary">Деление</button>
         </form>
         <br>
-        <div class="card" style="width: 200px">
+        <div class="card" style="width: 300px">
             <div class="card-body">
                 <h5 class="card-title">Результат:</h5>
-                <h3 id="card-text" class="card-text"></h3>
+                <h5 id="card-text" class="card-text"></h5>
             </div>
         </div>
     </div>
 
+    <!--First variant-->
     <script type="text/javascript">
 
-        $(document).on("click", "#add", function (e) {
-            e.preventDefault();
+        function submitData(url){
             $.ajax({
-                type: "POST",
-                url: "{% url "api_v1:add" %}",
+                type : 'POST',
+                url  : url,
                 headers: {"X-CSRFToken": "{{ csrf_token }}"},
-                data: JSON.stringify({
+                data : JSON.stringify({
                     A: $("#firstNumInput").val(),
                     B: $("#secondNumInput").val(),
                 }),
-                contentType: 'application/json',
-
-                success: function (json) {
-                    document.getElementById("card-text").innerHTML = json.answer;
+                success :  function(response){
+                    document.getElementById("card-text").innerHTML = response.answer;
                     document.getElementById("card-text").style.color = "green";
                 },
-
-                error: function (json) {
-                    document.getElementById("card-text").innerHTML = json.responseJSON.error_msg;
+                error: function (response) {
+                    document.getElementById("card-text").innerHTML = response.responseJSON.error_msg;
                     document.getElementById("card-text").style.color = "red";
+                    console.log(response)
                 }
             });
-        });
+        }
+
     </script>
+
+    <!--Second variant-->
+{#    <script>#}
+{#        $(document).on("click", "#add", function (e) {#}
+{#            e.preventDefault();#}
+{#            $.ajax({#}
+{#                type: "POST",#}
+{#                url: "{% url "api_v1:add" %}",#}
+{#                headers: {"X-CSRFToken": "{{ csrf_token }}"},#}
+{#                data: JSON.stringify({#}
+{#                    A: $("#firstNumInput").val(),#}
+{#                    B: $("#secondNumInput").val(),#}
+{#                }),#}
+{#                contentType: 'application/json',#}
+{##}
+{#                success: function (json) {#}
+{#                    document.getElementById("card-text").innerHTML = json.answer;#}
+{#                    document.getElementById("card-text").style.color = "green";#}
+{#                },#}
+{##}
+{#                error: function (json) {#}
+{#                    document.getElementById("card-text").innerHTML = json.responseJSON.error_msg;#}
+{#                    document.getElementById("card-text").style.color = "red";#}
+{#                }#}
+{#            });#}
+{#        });#}
+{#    </script>#}
+
 {% endblock content %}

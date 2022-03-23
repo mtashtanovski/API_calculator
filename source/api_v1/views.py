@@ -30,12 +30,12 @@ def add(request):
     if request.body:
         response_data = json.loads(request.body)
         if not response_data['A']:
-            response_body['error_msg'] = 'Ведите первое число!'
+            response_body['error_msg'] = 'Введите первое число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             print(response)
             return response
         elif not response_data['B']:
-            response_body['error_msg'] = 'Ведите второе число!'
+            response_body['error_msg'] = 'Введите второе число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             return response
         else:
@@ -52,12 +52,12 @@ def subtract(request):
     if request.body:
         response_data = json.loads(request.body)
         if not response_data['A']:
-            response_body['error_msg'] = 'Ведите первое число!'
+            response_body['error_msg'] = 'Введите первое число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             print(response)
             return response
         elif not response_data['B']:
-            response_body['error_msg'] = 'Ведите второе число!'
+            response_body['error_msg'] = 'Введите второе число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             return response
         else:
@@ -74,12 +74,12 @@ def multiply(request):
     if request.body:
         response_data = json.loads(request.body)
         if not response_data['A']:
-            response_body['error_msg'] = 'Ведите первое число!'
+            response_body['error_msg'] = 'Введите первое число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             print(response)
             return response
         elif not response_data['B']:
-            response_body['error_msg'] = 'Ведите второе число!'
+            response_body['error_msg'] = 'Введите второе число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             return response
         else:
@@ -96,12 +96,12 @@ def divide(request):
     if request.body:
         response_data = json.loads(request.body)
         if not response_data['A']:
-            response_body['error_msg'] = 'Ведите первое число!'
+            response_body['error_msg'] = 'Введите первое число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             print(response)
             return response
         elif not response_data['B']:
-            response_body['error_msg'] = 'Ведите второе число!'
+            response_body['error_msg'] = 'Введите второе число!'
             response = JsonResponse(response_body, status=HTTPStatus.BAD_REQUEST)
             return response
         else:
