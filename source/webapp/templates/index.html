@@ -14,19 +14,45 @@
               <input type="number" id="secondNumInput" class="form-control" placeholder="целое число">
             </div>
 
-            <button type="submit" class="btn btn-outline-primary">Сумма</button>
-            <button type="submit" class="btn btn-outline-primary">Разность</button>
-            <button type="submit" class="btn btn-outline-primary">Произведение</button>
-            <button type="submit" class="btn btn-outline-primary">Деление</button>
+            <button id="add" type="submit" class="btn btn-outline-primary">Сумма</button>
+            <button id="subtract" type="submit" class="btn btn-outline-primary">Разность</button>
+            <button id="multiply" type="submit" class="btn btn-outline-primary">Произведение</button>
+            <button id="divide" type="submit" class="btn btn-outline-primary">Деление</button>
         </form>
         <br>
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">Результат:</h5>
-                <p class="card-text"></p>
+                <p id="card-text" class="card-text"></p>
             </div>
         </div>
-
-
     </div>
+
+    <script type="text/javascript">
+        $(document).on("click", "#add", function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "{% url "api_v1:add" %}",
+                data: {
+                    A: $("#firstNumInput").val(),
+                    B: $("#secondNumInput").val(),
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    action: 'post'
+                },
+                contentType: 'application/json',
+                {#xhrFields: {#}
+                {#    withCredentials: true#}
+
+
+                success: function (json) {
+                    document.getElementById("card-text").innerHTML = json
+                    console.log(json)
+                },
+                error: function (xhr, errmsg, err) {
+
+                }
+            });
+        })
+    </script>
 {% endblock content %}
