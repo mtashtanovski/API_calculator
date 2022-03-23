@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h1>Привет Мир!</h1>
+        <form>
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="firstNumInput">Введите первое число:</label>
+              <input type="number" id="firstNumInput" class="form-control" placeholder="целое число">
+            </div>
+            <div class="form-group">
+              <label for="secondNumInput">Введите второе число:</label>
+              <input type="number" id="secondNumInput" class="form-control" placeholder="целое число">
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary">Сумма</button>
+            <button type="submit" class="btn btn-outline-primary">Разность</button>
+            <button type="submit" class="btn btn-outline-primary">Произведение</button>
+            <button type="submit" class="btn btn-outline-primary">Деление</button>
+        </form>
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Результат:</h5>
+                <p class="card-text"></p>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock content %}
